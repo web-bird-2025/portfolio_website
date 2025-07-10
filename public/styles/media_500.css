@@ -1,0 +1,43 @@
+/* Mobile Phones: 480px and below */
+@media (max-width: 500px) {
+  .left h1 {
+    font-size: 2rem;
+  }
+
+  .left p,
+  .profile-right p {
+    font-size: 0.95rem;
+  }
+
+  .stat h2 {
+    font-size: 1.2rem;
+  }
+
+  .stat p {
+    font-size: 0.85rem;
+  }
+
+  .nav {
+    padding: 1rem;
+  }
+
+  .logo span {
+    padding: 10px;
+    font-size: 1.2rem;
+  }
+
+  header {
+    padding: 1.5rem 0;
+  }
+
+  .container {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .social-icons {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+}
