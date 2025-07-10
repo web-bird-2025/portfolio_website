@@ -1,22 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+  <meta charset="UTF-8">
+  <title>Brooklyn Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-     <header>
-        <nav class="navbar">
-            <div class="1000227564"></div>
-            <ul class="nav-links">
-                <li><a href="#Home" class="active">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#service">Service</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <div class="container nav">
+      <div class="logo">U <span class="logo1">Utpal</span></div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="contact-btn">Contact</a>
+    </div>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="container hero-content">
+      <div class="left">
+        <h1>Hello, I’m<br><span>Utpal Rajak</span></h1>
+        <p>
+          I'm a Proffesional <strong>Photographer and Videographer</strong> based in India. I specialize in capturing compelling visuals and crafting cinematic stories through the lens. My passion lies in producing visually immersive content that connects emotionally and leaves a lasting impression.
+        </p>
+        <a href="#" class="say-hello">Say Hello!</a>
+
+        <div class="stats">
+          <div class="stat">
+            <h2>6 Y.</h2>
+            <p>Experience</p>
+          </div>
+          <div class="stat">
+            <h2>8+</h2>
+            <p>Major Project Completed</p>
+          </div>
+          <div class="stat">
+            <h2>6</h2>
+            <p>Happy Client</p>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <img src="/images/1000227564.jpg" alt="Utpal Rajak">
+      </div>
+    </div>
+  </section>
+  <section class="profile-section" id="about">
+    <div class="container profile-card">
+      <div class="profile-left">
+        <img src="/images/1000227564.jpg" alt="Profile Image">
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-behance"></i></a>
+        </div>
+      </div>
+      <div class="profile-right">
+        <h1>I am Professional Photographer<br><span>Videographer</span></h1>
+        <p>I provide creative visual services for clients, specializing in capturing stunning photography and cinematic video content for events, brands, and personal stories. My passion lies in crafting visually engaging experiences that blend creativity, storytelling, and technical precision.</p>
+        
+        <div class="button-group">
+          <a href="#" class="btn-primary">My Project</a>
+          <a href="#" class="btn-outline"><i class="fas fa-download"></i> Download CV</a>
+        </div>
+      </div>
+    </div>
+  </section>
 </body>
 </html>
