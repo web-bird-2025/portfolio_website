@@ -1,5 +1,44 @@
-/* Mobile Phones: 480px and below */
+/* Mobile Phones: 500px and below */
 @media (max-width: 500px) {
+  /* ==================== BASICS ==================== */
+
+  html {
+    font-size: 65%;
+  }
+
+  .my-container {
+    width: 90%;
+    border-radius: 10px;
+  }
+
+  .gap{
+    height: 59.27px;
+  }
+
+  section{
+    min-height: calc((100vh - 59.27px));
+  }
+
+  /* ==================== HEADER ==================== */
+  .nav {
+    padding: 1rem;
+  }
+
+  .logo span {
+    padding: 10px;
+    font-size: 1.2rem;
+  }
+
+  header {
+    padding: 1.5rem 0rem;
+  }
+
+  .navbar{
+    padding: 0rem 0.5rem;
+  }
+
+  /* ==================== HOME PAGE ==================== */
+
   .left h1 {
     font-size: 2rem;
   }
@@ -17,23 +56,7 @@
     font-size: 0.85rem;
   }
 
-  .nav {
-    padding: 1rem;
-  }
-
-  .logo span {
-    padding: 10px;
-    font-size: 1.2rem;
-  }
-
-  header {
-    padding: 1.5rem 0;
-  }
-
-  .container {
-    border-radius: 0;
-    box-shadow: none;
-  }
+  /* ==================== ABOUT PAGE ==================== */
 
   .social-icons {
     flex-wrap: wrap;

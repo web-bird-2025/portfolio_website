@@ -88,7 +88,7 @@ a {
 }
 
 
-.container {
+.my-container {
   max-width: 1100px;
   width: 80%;
   margin: auto;
@@ -118,6 +118,7 @@ h1, h2, h3, p,
 
 header {
   position: fixed;
+  z-index: 1000;
   top: 0;
   left: 0;
   width: 100vw;
@@ -219,6 +220,13 @@ header {
 .navbar .menu-btn {
   display: none;
 }
+
+/* ==================== HEADER ==================== */
+footer span.text-body-secondary,
+footer ul i{
+  color: var(--clr-text-light) !important;
+}
+
 
 /* ==================== HOME PAGE ==================== */
 
@@ -389,22 +397,25 @@ header {
   background-color: var(--clr-btn-text);
 }
 
-.portfolio-section {
+/* .portfolio-section {
   max-width: 1200px;
   margin: 60px auto;
   padding: 0 20px;
   text-align: center;
-}
+} */
+
+
+/* ==================== PROJECTS PAGE ==================== */
 
 .projects-title {
-  font-size: 36px;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
 .projects-subtitle {
   color: #777;
-  font-size: 16px;
+  font-size: 1rem;
   margin-bottom: 40px;
 }
 
@@ -495,4 +506,8 @@ header {
 
 .more-btn:hover {
   background-color: #843ddb;
+}
+
+.projects-container{
+  flex-direction: column;
 }

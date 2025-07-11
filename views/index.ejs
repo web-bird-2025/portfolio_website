@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Brooklyn Portfolio</title>
+  <title>UTPAL RAJAK || Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/styles/media_960.css">
   <link rel="stylesheet" href="/styles/media_780.css">
   <link rel="stylesheet" href="/styles/media_500.css">
+  <link rel="stylesheet" href="/styles/media_300.css">
 </head>
 
 <body>
@@ -44,12 +45,12 @@
     </div>
   </header>
 
-<!-- ==================== HOME PAGE ====================  -->
+  <!-- ==================== HOME PAGE ====================  -->
 
   <div class="gap" id="home"></div>
 
-  <section class="home-section">
-    <div class="container hero-content">
+  <section class="home-section bottom-scroll">
+    <div class="container my-container hero-content">
       <div class="left">
         <h1>Hello, I'm<br><span>Utpal Rajak</span></h1>
         <p>
@@ -81,12 +82,12 @@
   </section>
 
 
-<!-- ==================== ABOUT PAGE ====================  -->
+  <!-- ==================== ABOUT PAGE ====================  -->
 
   <div class="gap" id="about"></div>
 
-  <section class="profile-section">
-    <div class="container profile-card">
+  <section class="profile-section bottom-scroll">
+    <div class="container my-container profile-card">
       <div class="profile-left">
         <img src="/images/1000227564.jpg" alt="Profile Image">
         <div class="social-icons">
@@ -111,52 +112,69 @@
   </section>
 
 
-<!-- ==================== PROJECTS PAGE ====================  -->
+  <!-- ==================== PROJECTS PAGE ====================  -->
 
   <div class="gap" id="projects"></div>
 
-  <section class="projects-section">
-    <div class="conatiner">
-<h2 class="projects-title">Projects</h2>
-    <p class="projects-subtitle">Capturing Stories Through the Lens of Light & Motion</p>
+  <section class="projects-section bottom-scroll">
+    <div class="container my-container projects-container">
+      <h1 class="projects-title">Projects</h1>
+      <p class="projects-subtitle">Capturing Stories Through the Lens of Light & Motion</p>
 
-    <div class="portfolio-grid">
-      <% for(let i = 0; i < 6; i++) { %>
-      <div class="portfolio-card">
-        
+      <div class="portfolio-grid">
+        <% for(let i=0; i < 6; i++) { %>
+          <div class="portfolio-card">
+
+          </div>
+          <% } %>
       </div>
-      <% } %>
-    </div>
 
-    <div class="more-projects">
-      <a href="#" class="more-btn">More Project</a>
-    </div>
+      <div class="more-projects">
+        <a href="#" class="more-btn">More Project</a>
+      </div>
     </div>
   </section>
-  
 
-<!-- ==================== SERVICES PAGE ====================  -->
+
+  <!-- ==================== SERVICES PAGE ====================  -->
 
   <div class="gap" id="services"></div>
 
-  <section class="services-section">
-    <div class="conatiner">
+  <section class="services-section bottom-scroll">
+    <div class="conatiner my-container">
 
     </div>
   </section>
-  
 
-<!-- ==================== CONTACT PAGE ====================  -->
+
+  <!-- ==================== CONTACT PAGE ====================  -->
 
   <div class="gap" id="contact"></div>
 
-  <section class="contact-section">
-    <div class="conatiner">
+  <section class="contact-section bottom-scroll">
+    <div class="conatiner my-container">
 
     </div>
   </section>
 
+  <div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <div class="col-md-4 d-flex align-items-center">
+        <span class="mb-3 mb-md-0 text-body-secondary">© 2025 Utpal Rajak</span>
+      </div>
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+        <li class="ms-3"><a class="text-body-secondary" href="#" aria-label="Instagram">
+            <i class='bx bxl-facebook-circle'></i>
+          </a></li>
+        <li class="ms-3"><a class="text-body-secondary" href="#" aria-label="Facebook">
+            <i class='bx bxl-instagram-alt'></i></a></li>
+      </ul>
+    </footer>
+  </div>
 
+
+  <!-- Scroll reveal -->
+  <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.js"></script>
   <script src="js/script.js"></script>
 </body>
 

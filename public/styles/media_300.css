@@ -1,0 +1,7 @@
+@media (max-width: 300px) {
+  /* ==================== HOME PAGE ==================== */
+    html, body{
+        width: 100vw;
+    }
+
+}

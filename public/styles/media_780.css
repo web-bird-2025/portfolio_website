@@ -1,13 +1,21 @@
 /* ==================== MEDIA QUERIES ==================== */
 
 @media (max-width: 780px) {
+
+  .gap{
+    height: 88px;
+  }
+
+  section{
+    min-height: calc((100vh - 88px));
+  }
   /* ==================== HOME PAGE ==================== */
 
   html {
     font-size: 75%;
   }
 
-  .container {
+  .my-container {
     width: 80%;
     flex-direction: column;
     padding: 2rem 2rem;
@@ -71,6 +79,10 @@
   .hero-content {
     flex-direction: column;
     text-align: center;
+  }
+
+  .left{
+    margin-bottom: 20px;
   }
 
   .left,

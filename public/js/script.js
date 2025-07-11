@@ -75,3 +75,19 @@ window.addEventListener("scroll", () => {
   menuIcon.classList.remove("bx-x");
   navbar.classList.remove("active");
 });
+
+/* ======================================================
+   ✅ SCROLL EFFECTS
+====================================================== */
+
+ScrollReveal({
+  reset: true,
+  distance: "60px",
+  duration: 2000,
+  delay: 200,
+});
+
+ScrollReveal().reveal(".top-scroll", { origin: `top` });
+ScrollReveal().reveal(".bottom-scroll", { origin: `bottom` });
+ScrollReveal().reveal(".left-scroll", { origin: `left` });
+ScrollReveal().reveal(".right-scroll", { origin: `right` });
