@@ -89,7 +89,7 @@ a {
 
 
 .my-container {
-  max-width: 1100px;
+  max-width: 1200px;
   width: 80%;
   margin: auto;
   padding: 3rem 2.5rem;
@@ -407,6 +407,10 @@ footer ul i{
 
 /* ==================== PROJECTS PAGE ==================== */
 
+.projects-container{
+  flex-direction: column;
+}
+
 .projects-title {
   font-size: 2rem;
   font-weight: 700;
@@ -420,28 +424,23 @@ footer ul i{
 }
 
 .video-section {
-  display: flex;
-  padding: 20px;
-  width: 100%;
-  
+  padding: 20px 0;
 }
 
 .video-container {
   text-align: center;
-  max-width: 800px;
-  width: 50%;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background: #fff;
   padding: 20px;
-  
+  height: 100%;
 }
 
 .youtube-frame {
-  width: 80%;
-  height: 250px;
-  border-radius: 10px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
   border: none;
+  border-radius: 10px;
 }
 
 .yt-link {
@@ -459,47 +458,6 @@ footer ul i{
 .yt-link a i {
   vertical-align: middle;
   margin-left: 6px;
-}
-
-.portfolio-category {
-  font-size: 12px;
-  color: #777;
-  letter-spacing: 1px;
-  margin-bottom: 5px;
-  text-transform: uppercase;
-}
-
-.portfolio-name {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 8px 0;
-}
-
-.portfolio-desc {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 16px;
-}
-
-.case-study-btn {
-  display: inline-block;
-  padding: 10px 18px;
-  font-size: 14px;
-  color: #9F5AFD;
-  border: 1px solid #9F5AFD;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.case-study-btn span {
-  margin-left: 6px;
-}
-
-.case-study-btn:hover {
-  background-color: #9F5AFD;
-  color: #fff;
 }
 
 .more-projects {
@@ -520,8 +478,4 @@ footer ul i{
   background-color: #843ddb;
 }
 
-.projects-container{
-  flex-direction: column;
-  
-}
 
