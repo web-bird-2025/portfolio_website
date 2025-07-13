@@ -131,16 +131,21 @@
   }
 
   /* ==================== PORTFOLIO PAGE ==================== */
-
-
-
+  
   .slide-btn {
     display: none;
+  }
+  
+  /* ==================== CONTACT PAGE ==================== */
+
+  .contact-left,
+  .contact-right{
+    width: 100%;
   }
 }
 
 
-@media (min-width: 768px) {
+@media (min-width: 780px) {
   .video-box {
     flex: 0 0 50%;
     max-width: 50%;
