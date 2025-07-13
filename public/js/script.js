@@ -91,3 +91,39 @@ ScrollReveal().reveal(".top-scroll", { origin: `top` });
 ScrollReveal().reveal(".bottom-scroll", { origin: `bottom` });
 ScrollReveal().reveal(".left-scroll", { origin: `left` });
 ScrollReveal().reveal(".right-scroll", { origin: `right` });
+
+
+/*=========================================================
+✅ SLIDING EFFECT IN PROJECTS
+=========================================================*/
+
+
+  const slider = document.getElementById('videoSlider');
+  const leftBtn = document.querySelector('.slide-btn.left');
+  const rightBtn = document.querySelector('.slide-btn.right');
+
+  const scrollAmount = () => slider.offsetWidth / 1.2;
+
+  // Enable scroll buttons only on desktop/tablet
+  function handleResize() {
+    const isMobile = window.innerWidth <= 768;
+    leftBtn.style.display = isMobile ? 'none' : 'flex';
+    rightBtn.style.display = isMobile ? 'none' : 'flex';
+  }
+
+  rightBtn.addEventListener('click', () => {
+    if (window.innerWidth > 768) {
+      slider.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+    }
+  });
+
+  leftBtn.addEventListener('click', () => {
+    if (window.innerWidth > 768) {
+      slider.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+    }
+  });
+
+  // Initialize + listen for screen resize
+  window.addEventListener('resize', handleResize);
+  window.addEventListener('load', handleResize);
+
