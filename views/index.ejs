@@ -297,16 +297,23 @@
         </div>
 
         <div class="contact-right">
-          <form>
-            <input name="name" type="text" placeholder="Name*" required>
-            <input name="email" type="email" placeholder="Email*" required>
-            <div class="form-row">
-              <input name="requirement" type="text" placeholder="Requirement*" required>
-            </div>
-            <textarea name="message" placeholder="Message*" rows="4" required></textarea>
-            <button type="submit" class="btn-submit">Submit <i class='bx bx-right-arrow-alt'></i></button>
-          </form>
-        </div>
+  <form id="contactForm">
+    <input type="hidden" name="access_key" value="5ddf6342-76e9-458a-a8f3-45c64360d050">
+
+    <input name="name" type="text" placeholder="Name*" required>
+    <input name="email" type="email" placeholder="Email*" required>
+    <div class="form-row">
+      <input name="requirement" type="text" placeholder="Requirement*" required>
+    </div>
+    <textarea name="message" placeholder="Message*" rows="4" required></textarea>
+
+    <button type="submit" class="btn-submit">Submit <i class='bx bx-right-arrow-alt'></i></button>
+
+    <!-- ✅ Response message -->
+    <div id="formMessage" class="form-message" style="margin-top: 1rem;"></div>
+  </form>
+</div>
+
 
       </div>
 

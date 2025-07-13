@@ -158,6 +158,11 @@ function updateDots() {
   }
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+  window.scrollTo({ top: 0, behavior: "auto" });
+});
+
+
 // Left/Right Button Clicks (desktop only)
 leftBtn.addEventListener("click", () => {
   if (window.innerWidth >= 500 && currentIndex > 0) {
@@ -201,3 +206,43 @@ function handleResize() {
 scrollToVideo(0);
 handleResize();
 window.addEventListener("resize", handleResize);
+
+//Contact send 
+
+const form = document.getElementById("contactForm");
+const messageBox = document.getElementById("formMessage");
+
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  messageBox.style.color = "#007bff"; // Blue during loading
+  messageBox.innerHTML = `<span class="loader"></span> Sending...`;
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      messageBox.style.color = "green";
+      messageBox.innerHTML = "✅ Message sent successfully!";
+      form.reset();
+    } else {
+      messageBox.style.color = "red";
+      messageBox.innerHTML = "❌ Something went wrong. Please try again.";
+    }
+  } catch (error) {
+    messageBox.style.color = "red";
+    messageBox.innerHTML = "❌ Failed to send message. Network error.";
+  }
+
+  // Auto-hide after 4 seconds
+  setTimeout(() => {
+    messageBox.innerHTML = "";
+  }, 4000);
+});

@@ -143,6 +143,45 @@ header {
   background-color: var(--clr-surface);
 }
 
+/* Navigation link container */
+.my-nav .nav-links {
+  display: flex;
+  gap: 1.5rem;
+  position: relative;
+}
+
+/* Base link styling */
+.my-nav .nav-links a {
+  position: relative;
+  display: inline-block;
+  padding: 8px 0;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+/* Underline effect using ::after */
+.my-nav .nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #ca4eff; /* or your theme color */
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+/* On hover */
+.my-nav .nav-links a:hover::after,
+.my-nav .nav-links a.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
 .navbar {
   max-width: 1200px;
   margin: auto;
@@ -256,6 +295,45 @@ footer ul i {
   align-items: center;
   flex-wrap: wrap;
 }
+
+/* Animate the entire heading */
+.hero-content h1 {
+  opacity: 0;
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.hero-content h1 span {
+  display: inline-block;
+  background: linear-gradient(90deg, black);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: popIn 1s ease forwards;
+  animation-delay: 1s;
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+/* Fade in + slide up */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Pop in animation */
+@keyframes popIn {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
 
 .left {
   flex: 1;
@@ -735,6 +813,28 @@ CONTACT SECTION
 }
 
 /* Contact Form */
+
+
+
+.loader {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0, 123, 255, 0.6);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 0.6s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 .contact-right form {
   display: flex;
   flex-direction: column;
