@@ -92,38 +92,112 @@ ScrollReveal().reveal(".bottom-scroll", { origin: `bottom` });
 ScrollReveal().reveal(".left-scroll", { origin: `left` });
 ScrollReveal().reveal(".right-scroll", { origin: `right` });
 
-
 /*=========================================================
 ✅ SLIDING EFFECT IN PROJECTS
 =========================================================*/
 
+const slider = document.getElementById("videoSlider");
+const leftBtn = document.querySelector(".slide-btn.left");
+const rightBtn = document.querySelector(".slide-btn.right");
+const dotsContainer = document.getElementById("videoDots");
+const videoItems = document.querySelectorAll(".video-box");
 
-  const slider = document.getElementById('videoSlider');
-  const leftBtn = document.querySelector('.slide-btn.left');
-  const rightBtn = document.querySelector('.slide-btn.right');
+let currentIndex = 0;
+const totalItems = videoItems.length;
+const maxDots = 5;
 
-  const scrollAmount = () => slider.offsetWidth / 1.2;
+const scrollAmount = () => slider.offsetWidth; // Scroll exactly 1 item width
 
-  // Enable scroll buttons only on desktop/tablet
-  function handleResize() {
-    const isMobile = window.innerWidth <= 768;
-    leftBtn.style.display = isMobile ? 'none' : 'flex';
-    rightBtn.style.display = isMobile ? 'none' : 'flex';
+function scrollToVideo(index) {
+  const target = videoItems[index];
+  if (target) {
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest", // prevents vertical scrolling
+      inline: "start", // keeps horizontal scroll
+    });
+
+    currentIndex = index;
+    updateDots();
+    updateButtons();
+  }
+}
+
+function updateButtons() {
+  const isMobile = window.innerWidth < 500;
+  leftBtn.style.display = isMobile || currentIndex === 0 ? "none" : "flex";
+  rightBtn.style.display =
+    isMobile || currentIndex === totalItems - 1 ? "none" : "flex";
+}
+
+function updateDots() {
+  dotsContainer.innerHTML = "";
+
+  let start = 0,
+    end = totalItems;
+
+  if (totalItems > maxDots) {
+    if (currentIndex <= 2) {
+      start = 0;
+      end = maxDots;
+    } else if (currentIndex >= totalItems - 3) {
+      start = totalItems - maxDots;
+      end = totalItems;
+    } else {
+      start = currentIndex - 2;
+      end = currentIndex + 3;
+    }
   }
 
-  rightBtn.addEventListener('click', () => {
-    if (window.innerWidth > 768) {
-      slider.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+  for (let i = start; i < end; i++) {
+    const dot = document.createElement("span");
+    dot.classList.add("dot");
+    if (i === currentIndex) dot.classList.add("active");
+    dot.addEventListener("click", () => scrollToVideo(i));
+    dotsContainer.appendChild(dot);
+  }
+}
+
+// Left/Right Button Clicks (desktop only)
+leftBtn.addEventListener("click", () => {
+  if (window.innerWidth >= 500 && currentIndex > 0) {
+    scrollToVideo(currentIndex - 1);
+  }
+});
+
+rightBtn.addEventListener("click", () => {
+  if (window.innerWidth >= 500 && currentIndex < totalItems - 1) {
+    scrollToVideo(currentIndex + 1);
+  }
+});
+
+// Swipe Support (<500px only)
+let startX = 0;
+slider.addEventListener("touchstart", (e) => {
+  if (window.innerWidth < 500) {
+    startX = e.touches[0].clientX;
+  }
+});
+
+slider.addEventListener("touchend", (e) => {
+  if (window.innerWidth < 500) {
+    const endX = e.changedTouches[0].clientX;
+    const deltaX = endX - startX;
+
+    if (deltaX > 50 && currentIndex > 0) {
+      scrollToVideo(currentIndex - 1);
+    } else if (deltaX < -50 && currentIndex < totalItems - 1) {
+      scrollToVideo(currentIndex + 1);
     }
-  });
+  }
+});
 
-  leftBtn.addEventListener('click', () => {
-    if (window.innerWidth > 768) {
-      slider.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
-    }
-  });
+// Resize Behavior
+function handleResize() {
+  updateButtons();
+}
 
-  // Initialize + listen for screen resize
-  window.addEventListener('resize', handleResize);
-  window.addEventListener('load', handleResize);
-
+// Init
+scrollToVideo(0);
+handleResize();
+window.addEventListener("resize", handleResize);

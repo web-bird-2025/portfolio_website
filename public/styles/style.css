@@ -1,7 +1,12 @@
 /* ==================== THEME VARIABLES ==================== */
 
 :root {
-  --clr-bg-gradient: linear-gradient(135deg, #ffffff 0%, #f5e9ff 50%, #e2f3f2 100%);
+  --clr-bg-gradient: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f5e9ff 50%,
+    #e2f3f2 100%
+  );
   --clr-text-main: #2d2d2d;
   --clr-text-light: #4b5563;
   --clr-heading: #1f2937;
@@ -11,21 +16,29 @@
   --clr-btn-text: #ffffff;
   --clr-surface: #ffffff;
   --clr-surface-inverse: #000000;
+  --clr-service-card: #e8c2ff;
+  --clr-service-card-text: #000;
 }
 
 .dark-theme {
-  --clr-bg-gradient: linear-gradient(135deg, #1c1c1c 0%, #2a1a3c 50%, #112627 100%);
-  --clr-text-main: #e0e0e0;
-  --clr-text-light: #bbbbbb;
-  --clr-heading: #f5f5f5;
-  --clr-primary: #c084fc;
-  --clr-primary-hover: #a855f7;
-  --clr-secondary-bg: #2f2f2f;
-  --clr-btn-text: #ffffff;
-  --clr-surface: #1e1e1e;
-  --clr-surface-inverse: #ffffff;
+  --clr-bg-gradient: linear-gradient(
+    135deg,
+    #1c1c1c 0%,
+    #2a1a3c 50%,
+    #112627 100%
+    );
+    --clr-text-main: #e0e0e0;
+    --clr-text-light: #bbbbbb;
+    --clr-heading: #f5f5f5;
+    --clr-primary: #c084fc;
+    --clr-primary-hover: #a855f7;
+    --clr-secondary-bg: #2f2f2f;
+    --clr-btn-text: #ffffff;
+    --clr-surface: #1e1e1e;
+    --clr-surface-inverse: #ffffff;
+    --clr-service-card:  #a855f7;
+    --clr-service-card-text: #000;
 }
-
 
 /* ==================== BASICS ==================== */
 
@@ -49,9 +62,8 @@ body {
 body::-webkit-scrollbar {
   display: none;
   body {
-  transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
-}
-
+    transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
+  }
 }
 
 .gap {
@@ -87,7 +99,6 @@ a {
   /* border-bottom: 2px solid var(--clr-primary-hover); */
 }
 
-
 .my-container {
   max-width: 1200px;
   width: 80%;
@@ -102,17 +113,21 @@ a {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
 }
 
-html, body,
-header, .container, section, 
-h1, h2, h3, p,
-.my-btn, .btn-outline, 
+html,
+body,
+header,
+.container,
+section,
+h1,
+h2,
+h3,
+p,
+.my-btn,
+.btn-outline,
 .nav-links a {
-  transition: 
-    background-color 0.4s ease-in-out, 
-    color 0.4s ease-in-out, 
+  transition: background-color 0.4s ease-in-out, color 0.4s ease-in-out,
     border-color 0.4s ease-in-out;
 }
-
 
 /* ==================== HEADER ==================== */
 
@@ -184,8 +199,8 @@ header {
 }
 
 .my-nav.active {
-    display: flex;
-  }
+  display: flex;
+}
 
 .nav-links {
   list-style: none;
@@ -223,10 +238,9 @@ header {
 
 /* ==================== HEADER ==================== */
 footer span.text-body-secondary,
-footer ul i{
+footer ul i {
   color: var(--clr-text-light) !important;
 }
-
 
 /* ==================== HOME PAGE ==================== */
 
@@ -397,17 +411,9 @@ footer ul i{
   background-color: var(--clr-btn-text);
 }
 
-/* .portfolio-section {
-  max-width: 1200px;
-  margin: 60px auto;
-  padding: 0 20px;
-  text-align: center;
-} */
-
-
 /* ==================== PROJECTS PAGE ==================== */
 
-.projects-container{
+.projects-container {
   flex-direction: column;
 }
 
@@ -420,11 +426,35 @@ footer ul i{
 .projects-subtitle {
   color: #777;
   font-size: 1rem;
-  margin-bottom: 40px;
 }
 
 .video-section {
   padding: 20px 0;
+}
+
+/* For Webkit browsers (Chrome, Edge, Safari) */
+.video-section::-webkit-scrollbar {
+  height: 8px; /* horizontal scrollbar */
+  border-radius: 10px;
+}
+
+.video-section::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.video-section::-webkit-scrollbar-thumb {
+  background: #9f5afd; /* Primary accent color */
+  border-radius: 10px;
+}
+
+.video-section::-webkit-scrollbar-thumb:hover {
+  background: #843ddb; /* Darker on hover */
+}
+
+/* Firefox (limited support, but this helps) */
+.video-section {
+  scrollbar-color: #9f5afd transparent; /* thumb and track */
+  scrollbar-width: thin;
 }
 
 .video-container {
@@ -432,9 +462,29 @@ footer ul i{
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      background: #000;
+  padding-bottom: 56.25%;
+  height: 0;
+  background: #000;
+}
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 2rem 1rem;
+}
+
+.video-section {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 1rem 0;
+}
+
+.video-box {
+  flex: 0 0 100%;
+  max-width: 100%;
 }
 
 .youtube-frame {
@@ -443,28 +493,68 @@ footer ul i{
   border: none;
   border-radius: 10px;
   position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
 }
 
 .yt-link {
-  margin-top: 8px;
+  margin-top: 18px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
 .yt-link a {
   display: inline-block;
-  color: #007bff;
-      text-decoration: none;
-      font-weight: bold;
+  color: #ff0000;
+  text-decoration: none;
+  font-weight: bold;
   font-size: 16px;
+}
+
+.yt-link a:hover {
+  text-decoration: underline;
 }
 
 .yt-link a i {
   vertical-align: middle;
   margin-left: 6px;
-  
+}
+
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--clr-primary);
+  color: white;
+  font-size: 1.8rem;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease-in-out;
+}
+
+.slide-btn:hover {
+  background: var(--clr-primary-hover);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.slide-btn.left {
+  left: 5px;
+}
+
+.slide-btn.right {
+  right: 5px;
 }
 
 .more-projects {
@@ -473,7 +563,7 @@ footer ul i{
 
 .more-btn {
   padding: 12px 28px;
-  background-color: #9F5AFD;
+  background-color: #9f5afd;
   color: #fff;
   border-radius: 8px;
   font-weight: 500;
@@ -485,87 +575,29 @@ footer ul i{
   background-color: #843ddb;
 }
 
-.slider-container {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      padding: 2rem 1rem;
-    }
-
-    .video-section {
-      display: flex;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      gap: 20px;
-      padding: 1rem 0;
-    }
-
-    .video-box {
-      flex: 0 0 100%;
-      max-width: 100%;
-    }
-
-    @media (min-width: 768px) {
-      .video-box {
-        flex: 0 0 50%;
-        max-width: 50%;
-      }
-    }
-
-    .yt-link a:hover {
-      text-decoration: underline;
-    }
-
-    /* Hide slide buttons on small screens (mobile) */
-@media (max-width: 768px) {
-  .slide-btn {
-    display: none;
-  }
+.video-dots {
+  margin-top: 15px;
+  text-align: center;
 }
 
-
-    .slide-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.6);
-      color: white;
-      font-size: 1.8rem;
-      border: none;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      z-index: 10;
-    }
-
-    .slide-btn:hover {
-  background: #ffffff;
-  color: #000000;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+.video-dots .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
 }
 
-    .slide-btn.left {
-      left: 5px;
-      
-    }
+.video-dots .dot.active {
+  background-color: #9f5afd;
+}
 
-    .slide-btn.right {
-      right: 5px;
-    }
+/* ==================== SERVICES PAGE ==================== */
 
-    /*=====================================================
-    SERVICE PAGE STYLING
-    ======================================================*/
 
-    .services-section {
+.services-section {
   background: #f6f6f8;
   padding: 60px 0;
 }
@@ -618,28 +650,29 @@ footer ul i{
 }
 
 .service-card {
-  background: #ffffff;
+  background: var(--clr-service-card);
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
 }
 
 .service-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
 }
 
 .service-card h3 {
-  font-weight: 700;
+  font-weight: 900;
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
 }
 
 .service-card p {
-  color: #555;
+  color: var(--clr-text-main);
   font-size: 0.95rem;
   line-height: 1.6;
+  font-weight: 500;
 }
 
 /*==================================================
@@ -772,7 +805,6 @@ CONTACT SECTION
 .btn-submit:hover {
   background: linear-gradient(to right, #9333ea, #6d28d9);
 }
-
 
 /*==================================================
 FOOTER
