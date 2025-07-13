@@ -106,15 +106,13 @@ let currentIndex = 0;
 const totalItems = videoItems.length;
 const maxDots = 5;
 
-const scrollAmount = () => slider.offsetWidth; // Scroll exactly 1 item width
-
 function scrollToVideo(index) {
   const target = videoItems[index];
   if (target) {
     target.scrollIntoView({
       behavior: "smooth",
-      block: "nearest", // prevents vertical scrolling
-      inline: "start", // keeps horizontal scroll
+      block: "nearest",
+      inline: "start",
     });
 
     currentIndex = index;
@@ -158,12 +156,29 @@ function updateDots() {
   }
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  window.scrollTo({ top: 0, behavior: "auto" });
+// Detect visible item when user scrolls manually
+slider.addEventListener("scroll", () => {
+  let closestIndex = 0;
+  let closestDistance = Infinity;
+
+  videoItems.forEach((item, index) => {
+    const itemLeft = item.getBoundingClientRect().left;
+    const sliderLeft = slider.getBoundingClientRect().left;
+    const distance = Math.abs(itemLeft - sliderLeft);
+
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestIndex = index;
+    }
+  });
+
+  if (closestIndex !== currentIndex) {
+    currentIndex = closestIndex;
+    updateDots();
+    updateButtons();
+  }
 });
 
-
-// Left/Right Button Clicks (desktop only)
 leftBtn.addEventListener("click", () => {
   if (window.innerWidth >= 500 && currentIndex > 0) {
     scrollToVideo(currentIndex - 1);
@@ -176,7 +191,7 @@ rightBtn.addEventListener("click", () => {
   }
 });
 
-// Swipe Support (<500px only)
+// Swipe support
 let startX = 0;
 slider.addEventListener("touchstart", (e) => {
   if (window.innerWidth < 500) {
@@ -197,15 +212,15 @@ slider.addEventListener("touchend", (e) => {
   }
 });
 
-// Resize Behavior
-function handleResize() {
+// Initial
+window.addEventListener("DOMContentLoaded", () => {
+  scrollToVideo(0);
   updateButtons();
-}
+  updateDots();
+  window.scrollTo({ top: 0, behavior: "auto" });
+});
 
-// Init
-scrollToVideo(0);
-handleResize();
-window.addEventListener("resize", handleResize);
+window.addEventListener("resize", updateButtons);
 
 //Contact send 
 
