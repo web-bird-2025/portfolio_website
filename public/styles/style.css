@@ -305,14 +305,13 @@ footer ul i {
 
 .hero-content h1 span {
   display: inline-block;
-  background: linear-gradient(90deg, black);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--clr-heading); /* matches h1 in both light & dark */
   animation: popIn 1s ease forwards;
   animation-delay: 1s;
   transform: scale(0.9);
   opacity: 0;
 }
+
 
 /* Fade in + slide up */
 @keyframes fadeInUp {
