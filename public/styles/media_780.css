@@ -79,7 +79,7 @@
 
   /* ==================== HOME PAGE ==================== */
 
-  .hero-content {
+ .hero-content {
     flex-direction: column;
     text-align: center;
   }
