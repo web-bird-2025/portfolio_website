@@ -122,7 +122,7 @@ function scrollToVideo(index) {
 }
 
 function updateButtons() {
-  const isMobile = window.innerWidth < 500;
+  const isMobile = window.innerWidth < 780;
   leftBtn.style.display = isMobile || currentIndex === 0 ? "none" : "flex";
   rightBtn.style.display =
     isMobile || currentIndex === totalItems - 1 ? "none" : "flex";
@@ -156,28 +156,27 @@ function updateDots() {
   }
 }
 
-// Detect visible item when user scrolls manually
-slider.addEventListener("scroll", () => {
-  let closestIndex = 0;
-  let closestDistance = Infinity;
-
-  videoItems.forEach((item, index) => {
-    const itemLeft = item.getBoundingClientRect().left;
-    const sliderLeft = slider.getBoundingClientRect().left;
-    const distance = Math.abs(itemLeft - sliderLeft);
-
-    if (distance < closestDistance) {
-      closestDistance = distance;
-      closestIndex = index;
-    }
-  });
-
-  if (closestIndex !== currentIndex) {
-    currentIndex = closestIndex;
-    updateDots();
-    updateButtons();
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const index = Array.from(videoItems).indexOf(entry.target);
+        if (index !== currentIndex) {
+          currentIndex = index;
+          updateDots();
+          updateButtons();
+        }
+      }
+    });
+  },
+  {
+    root: slider,
+    threshold: 0.6, // Adjust sensitivity (0.6 = 60% in view)
   }
-});
+);
+
+// Observe each video item
+videoItems.forEach((item) => observer.observe(item));
 
 leftBtn.addEventListener("click", () => {
   if (window.innerWidth >= 500 && currentIndex > 0) {
@@ -212,6 +211,10 @@ slider.addEventListener("touchend", (e) => {
   }
 });
 
+/*=========================================================
+✅ PAGE RELOAD
+=========================================================*/
+
 // Initial
 window.addEventListener("DOMContentLoaded", () => {
   scrollToVideo(0);
@@ -222,7 +225,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("resize", updateButtons);
 
-//Contact send 
+/*=========================================================
+✅ CONTACT FORM
+=========================================================*/
 
 const form = document.getElementById("contactForm");
 const messageBox = document.getElementById("formMessage");
