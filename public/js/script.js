@@ -171,13 +171,14 @@ const observer = new IntersectionObserver(
   },
   {
     root: slider,
-    threshold: 0.6, // Adjust sensitivity (0.6 = 60% in view)
+    threshold: 0.6,
   }
 );
 
 // Observe each video item
 videoItems.forEach((item) => observer.observe(item));
 
+// Button navigation
 leftBtn.addEventListener("click", () => {
   if (window.innerWidth >= 500 && currentIndex > 0) {
     scrollToVideo(currentIndex - 1);
@@ -210,6 +211,23 @@ slider.addEventListener("touchend", (e) => {
     }
   }
 });
+
+// ✅ Initialize slider position and button/dot state on page load
+// scrollToVideo(0);
+// ✅ Reset scroll position and initialize UI
+window.addEventListener("load", () => {
+  // Ensure we're scrolled to the beginning
+  slider.scrollLeft = 0;
+
+  // Set index manually
+  currentIndex = 0;
+
+  // Call UI updates
+  updateButtons();
+  updateDots();
+});
+
+
 
 /*=========================================================
 ✅ PAGE RELOAD
