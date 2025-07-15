@@ -97,13 +97,32 @@ function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
   const totalItems = videoItems.length;
   const maxDots = 5;
 
+  function applyLayoutFixes() {
+    const isMobile = window.innerWidth < 780;
+
+    if (isMobile) {
+      slider.style.overflowX = totalItems > 2 ? "auto" : "hidden";
+      slider.style.scrollSnapType = totalItems > 2 ? "x mandatory" : "none";
+      videoItems.forEach((item) => {
+        item.style.minWidth = "100%";
+        item.style.scrollSnapAlign = "start";
+      });
+    } else {
+      slider.style.overflowX = totalItems > 2 ? "auto" : "hidden";
+      videoItems.forEach((item) => {
+        item.style.minWidth = "";
+        item.style.scrollSnapAlign = "";
+      });
+    }
+  }
+
   function scrollToVideo(index) {
     const target = videoItems[index];
     if (target) {
       target.scrollIntoView({
         behavior: "smooth",
-        block: "nearest",
         inline: "start",
+        block: "nearest",
       });
       currentIndex = index;
       updateDots();
@@ -113,17 +132,29 @@ function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
 
   function updateButtons() {
     const isMobile = window.innerWidth < 780;
-    leftBtn.style.display = isMobile || currentIndex === 0 ? "none" : "flex";
-    rightBtn.style.display =
-      isMobile || currentIndex >= totalItems - 2 ? "none" : "flex";
+    const isScrollable = slider.scrollWidth > slider.clientWidth;
+
+    if (isMobile || totalItems <= 2 || !isScrollable) {
+      leftBtn.style.display = "none";
+      rightBtn.style.display = "none";
+      return;
+    }
+
+    const scrollLeft = Math.round(slider.scrollLeft);
+    const maxScrollLeft = Math.round(slider.scrollWidth - slider.clientWidth);
+
+    leftBtn.style.display = scrollLeft <= 5 ? "none" : "flex";
+    rightBtn.style.display = scrollLeft >= maxScrollLeft - 5 ? "none" : "flex";
   }
 
   function updateDots() {
     dotsContainer.innerHTML = "";
-    let start = 0,
-      end = totalItems;
+    const isMobile = window.innerWidth < 780;
 
-    if (totalItems > maxDots) {
+    let start = 0;
+    let end = totalItems;
+
+    if (!isMobile && totalItems > maxDots) {
       if (currentIndex <= 2) {
         start = 0;
         end = maxDots;
@@ -145,116 +176,145 @@ function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
     }
   }
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const index = Array.from(videoItems).indexOf(entry.target);
-          if (index !== currentIndex) {
-            currentIndex = index;
-            updateDots();
-            updateButtons();
-          }
-        }
-      });
-    },
-    {
-      root: slider,
-      threshold: 0.6,
-    }
-  );
+  // Detect scroll to update index, buttons, and dots
+  slider.addEventListener("scroll", () => {
+  const sliderRect = slider.getBoundingClientRect();
+  let closestIndex = 0;
+  let minDistance = Infinity;
 
-  videoItems.forEach((item) => observer.observe(item));
+  videoItems.forEach((item, index) => {
+    const rect = item.getBoundingClientRect();
+    const distance = Math.abs(rect.left - sliderRect.left);
+    if (distance < minDistance) {
+      minDistance = distance;
+      closestIndex = index;
+    }
+  });
+
+  // ✅ Detect if scrolled fully to the right
+  const scrollLeft = Math.round(slider.scrollLeft);
+  const maxScrollLeft = Math.round(slider.scrollWidth - slider.clientWidth);
+
+  if (scrollLeft >= maxScrollLeft - 5) {
+    closestIndex = videoItems.length - 1;
+  }
+
+  if (closestIndex !== currentIndex) {
+    currentIndex = closestIndex;
+    updateDots();
+  }
+
+  updateButtons(); // Always update arrows
+});
+
 
   leftBtn.addEventListener("click", () => {
-    if (currentIndex > 0) {
-      scrollToVideo(currentIndex - 1);
-    }
+    if (currentIndex > 0) scrollToVideo(currentIndex - 1);
   });
 
   rightBtn.addEventListener("click", () => {
-    if (currentIndex < totalItems - 1) {
-      scrollToVideo(currentIndex + 1);
-    }
+    if (currentIndex < totalItems - 1) scrollToVideo(currentIndex + 1);
   });
 
+  // Touch swipe for mobile
   let startX = 0;
   slider.addEventListener("touchstart", (e) => {
-    if (window.innerWidth < 500) {
-      startX = e.touches[0].clientX;
-    }
+    if (window.innerWidth < 780) startX = e.touches[0].clientX;
   });
 
   slider.addEventListener("touchend", (e) => {
-    if (window.innerWidth < 500) {
-      const endX = e.changedTouches[0].clientX;
-      const deltaX = endX - startX;
-
-      if (deltaX > 50 && currentIndex > 0) {
-        scrollToVideo(currentIndex - 1);
-      } else if (deltaX < -50 && currentIndex < totalItems - 1) {
+    if (window.innerWidth < 780) {
+      const deltaX = e.changedTouches[0].clientX - startX;
+      if (deltaX > 50 && currentIndex > 0) scrollToVideo(currentIndex - 1);
+      else if (deltaX < -50 && currentIndex < totalItems - 1)
         scrollToVideo(currentIndex + 1);
-      }
     }
   });
 
-  slider.scrollLeft = 0;
+  // Initial render
+  applyLayoutFixes();
   scrollToVideo(0);
-  updateButtons();
-  updateDots();
 
-  window.addEventListener("resize", updateButtons);
+  window.addEventListener("resize", () => {
+    applyLayoutFixes();
+    updateButtons();
+    updateDots();
+  });
 }
 
-/*=====================================================
-✅ MORE PROJECTS BUTTON and SHOW LESS BUTTON FUNCTIONALITY
-=======================================================*/
 
+/*=======================
+✅ MORE PROJECTS TOGGLE
+=========================*/
 const moreBtn = document.getElementById("moreProjectsBtn");
 const bottomSliderWrapper = document.getElementById("bottomSliderWrapper");
 const projectsSection = document.getElementById("projectsSection");
+const bottomSliderHeading = bottomSliderWrapper.querySelector(".category");
 
 let isExpanded = false;
+let bottomSliderInitialized = false;
 
 moreBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
   if (!isExpanded) {
+    bottomSliderWrapper.classList.add("show");
     bottomSliderWrapper.classList.remove("hidden");
-    bottomSliderWrapper.scrollIntoView({ behavior: "smooth" });
     moreBtn.textContent = "Show Less";
+
+    if (!bottomSliderInitialized) {
+      initializeVideoSlider({
+        sliderId: "videoSliderBottom",
+        dotsId: "videoDotsBottom",
+        leftClass: ".slide-btn.left",
+        rightClass: ".slide-btn.right",
+      });
+      bottomSliderInitialized = true;
+    }
+
+    scrollToElement(bottomSliderHeading, 107);
   } else {
+    bottomSliderWrapper.classList.remove("show");
     bottomSliderWrapper.classList.add("hidden");
-
-    // Scroll to top of main projects section
-    projectsSection.scrollIntoView({ behavior: "smooth", block: "start" });
-
     moreBtn.textContent = "More Projects";
+    scrollToElement(projectsSection.querySelector(".category"), 107);
   }
 
   isExpanded = !isExpanded;
 });
 
+function scrollToElement(targetElement, offset = 0) {
+  const rect = targetElement.getBoundingClientRect();
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const top = rect.top + scrollTop - offset;
 
+  window.scrollTo({
+    top,
+    behavior: "smooth",
+  });
+}
 
-/*=========================================================
-✅ PAGE RELOAD & INITIALIZATION
-=========================================================*/
+/*==============================
+✅ ON LOAD BEHAVIOR
+===============================*/
+window.addEventListener("DOMContentLoaded", () => {
+  initializeVideoSlider({
+    sliderId: "videoSliderTop",
+    dotsId: "videoDotsTop",
+    leftClass: ".slider-container:first-of-type .slide-btn.left",
+    rightClass: ".slider-container:first-of-type .slide-btn.right",
+  });
 
-window.onload = () => {
-  // Disable browser scroll restoration
   if ("scrollRestoration" in history) {
     history.scrollRestoration = "manual";
   }
 
-  // Clear hash in URL
   if (window.location.hash) {
     history.replaceState(null, null, window.location.pathname);
   }
 
-  // Scroll to top immediately
   window.scrollTo({ top: 0, behavior: "auto" });
-};
+});
 
 /*=========================================================
 ✅ CONTACT FORM

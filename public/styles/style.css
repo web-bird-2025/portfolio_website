@@ -518,6 +518,13 @@ footer ul i {
 
 .video-section {
   padding: 20px 0;
+  display: flex;
+  gap: 20px;
+  padding: 1rem 0;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-color: #9f5afd transparent; /* thumb and track */
+  scrollbar-width: thin;
 }
 
 /* For Webkit browsers (Chrome, Edge, Safari) */
@@ -539,12 +546,6 @@ footer ul i {
   background: #843ddb; /* Darker on hover */
 }
 
-/* Firefox (limited support, but this helps) */
-.video-section {
-  scrollbar-color: #9f5afd transparent; /* thumb and track */
-  scrollbar-width: thin;
-}
-
 .video-container {
   text-align: center;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -563,16 +564,10 @@ footer ul i {
   transition: all 2s ease;
 }
 
-.video-section {
-  display: flex;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  gap: 20px;
-  padding: 1rem 0;
-}
+
 
 .video-box {
-  flex: 0 0 100%;
+  flex: 0 0 auto;
   max-width: 100%;
 }
 
@@ -651,12 +646,7 @@ footer ul i {
 }
 
 .more-btn {
-  padding: 12px 28px;
-  background-color: #9f5afd;
-  color: #fff;
-  border-radius: 8px;
-  font-weight: 500;
-  text-decoration: none;
+  border: 0px;
   transition: background-color 0.3s ease;
 }
 
@@ -681,6 +671,19 @@ footer ul i {
 
 .video-dots .dot.active {
   background-color: #9f5afd;
+}
+
+#bottomSliderWrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+#bottomSliderWrapper.show {
+  max-height: 2000px; 
+  opacity: 1;
+  visibility: visible;
 }
 
 /* ==================== SERVICES PAGE ==================== */
