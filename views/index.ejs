@@ -122,41 +122,53 @@
   <div class="gap" id="projects"></div>
 
   <section class="projects-section bottom-scroll">
-    <div class="container my-container projects-container">
-      <h1 class="projects-title">Projects</h1>
-      <p class="projects-subtitle">Capturing Stories Through the Lens of Light & Motion</p>
+  <div class="container my-container projects-container">
+    <h1 class="projects-title">Projects</h1>
+    <p class="projects-subtitle">Capturing Stories Through the Lens of Light & Motion</p>
 
+    <!-- First Slider Row: Video 1 & Video 2 -->
+    <div class="slider-container">
+      <button class="slide-btn left">&#10094;</button>
+      <h2 class="category">Cinematography Videos</h2>
+      <div class="video-section" id="videoSliderTop">
+        <!-- Video 1 -->
+        <div class="video-box">
+          <div class="video-container">
+            <iframe class="youtube-frame"
+              src="https://www.youtube.com/embed/u05zBEb6Tv0?autoplay=1&mute=1&rel=0&showinfo=0&controls=1&loop=1&playlist=u05zBEb6Tv0"
+              title="AI Project Demo" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          <div class="yt-link">
+            <a href="https://youtu.be/u05zBEb6Tv0" target="_blank">
+              Watch on YouTube <i class='bx bx-link-external'></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Video 2 -->
+        <div class="video-box">
+          <div class="video-container">
+            <iframe class="youtube-frame"
+              src="https://www.youtube.com/embed/jJcKuFL2tf4?autoplay=1&mute=1&rel=0&showinfo=0&controls=1&loop=1&playlist=jJcKuFL2tf4"
+              title="Tech Talk" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
+          <div class="yt-link">
+            <a href="https://youtu.be/jJcKuFL2tf4" target="_blank">
+              Watch on YouTube <i class='bx bx-link-external'></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <button class="slide-btn right">&#10095;</button>
+      <div class="video-dots" id="videoDotsTop"></div>
+    </div>
+
+    <!-- Bottom Slider: Initially Hidden -->
+    <div class="bottom-slider-wrapper hidden" id="bottomSliderWrapper">
       <div class="slider-container">
         <button class="slide-btn left">&#10094;</button>
-        <div class="video-section" id="videoSlider">
-          <!-- Video 1 -->
-          <div class="video-box">
-            <div class="video-container">
-              <iframe class="youtube-frame"
-                src="https://www.youtube.com/embed/u05zBEb6Tv0?autoplay=1&mute=1&rel=0&showinfo=0&controls=1&loop=1&playlist=u05zBEb6Tv0"
-                title="AI Project Demo" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
-            <div class="yt-link">
-              <a href="https://youtu.be/u05zBEb6Tv0" target="_blank">
-                Watch on YouTube <i class='bx bx-link-external'></i>
-              </a>
-            </div>
-          </div>
-
-          <!-- Video 2 -->
-          <div class="video-box">
-            <div class="video-container">
-              <iframe class="youtube-frame"
-                src="https://www.youtube.com/embed/jJcKuFL2tf4?autoplay=1&mute=1&rel=0&showinfo=0&controls=1&loop=1&playlist=jJcKuFL2tf4"
-                title="Tech Talk" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
-            <div class="yt-link">
-              <a href="https://youtu.be/jJcKuFL2tf4" target="_blank">
-                Watch on YouTube <i class='bx bx-link-external'></i>
-              </a>
-            </div>
-          </div>
-
+        <h2 class="category">Editing Videos</h2>
+        <div class="video-section" id="videoSliderBottom">
           <!-- Video 3 -->
           <div class="video-box">
             <div class="video-container">
@@ -186,15 +198,16 @@
           </div>
         </div>
         <button class="slide-btn right">&#10095;</button>
-        <div class="video-dots" id="videoDots"></div>
-      </div>
-      <div class="more-projects">
-        <a href="#" class="more-btn">More Project</a>
+        <div class="video-dots" id="videoDotsBottom"></div>
       </div>
     </div>
-  </section>
 
-
+    <!-- More Projects Button -->
+    <div class="more-projects">
+      <a href="#" class="more-btn" id="moreProjectsBtn">More Project</a>
+    </div>
+  </div>
+</section>
 
 
   <!-- ==================== SERVICES PAGE ====================  -->
@@ -290,6 +303,7 @@
               <div>
                 <strong>Call Me Now:</strong>
                 <p>+91 70036 09749</p>
+                <p>+91 9330430677</p>
               </div>
             </div>
           </div>

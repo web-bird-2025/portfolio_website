@@ -5,7 +5,6 @@
 const toggleBtn = document.getElementById("theme-toggle");
 const icon = toggleBtn.querySelector("i");
 
-// Load saved theme on initial load
 window.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
@@ -14,7 +13,6 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Toggle dark/light theme
 toggleBtn.addEventListener("click", () => {
   const isDark = document.body.classList.toggle("dark-theme");
   icon.classList.replace(
@@ -31,7 +29,6 @@ toggleBtn.addEventListener("click", () => {
 const menuIcon = document.querySelector("#menu-icon");
 const navbar = document.querySelector(".my-nav");
 
-// Toggle nav visibility on mobile
 menuIcon.onclick = () => {
   menuIcon.classList.toggle("bx-x");
   navbar.classList.toggle("active");
@@ -45,24 +42,19 @@ const navButtons = document.querySelectorAll(".my-nav a");
 const gapElements = document.querySelectorAll(".gap");
 const viewportHeight = window.innerHeight;
 
-// ➤ Click: Set active nav link
 navButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
     navButtons.forEach((el) => el.classList.remove("active"));
     btn.classList.add("active");
-
-    // Close nav (mobile)
     menuIcon.classList.remove("bx-x");
     navbar.classList.remove("active");
   });
 });
 
-// ➤ Scroll: Highlight nav based on visible section
 window.addEventListener("scroll", () => {
   gapElements.forEach((section, index) => {
     const rect = section.getBoundingClientRect();
     const topGap = rect.top;
-
     if (topGap < viewportHeight / 1.5) {
       navButtons.forEach((el) => el.classList.remove("active"));
       if (navButtons[index]) {
@@ -70,8 +62,6 @@ window.addEventListener("scroll", () => {
       }
     }
   });
-
-  // Auto-close nav on scroll (mobile)
   menuIcon.classList.remove("bx-x");
   navbar.classList.remove("active");
 });
@@ -93,155 +83,167 @@ ScrollReveal().reveal(".left-scroll", { origin: `left` });
 ScrollReveal().reveal(".right-scroll", { origin: `right` });
 
 /*=========================================================
-✅ SLIDING EFFECT IN PROJECTS
+✅ SLIDING EFFECT FOR MULTIPLE VIDEO SLIDERS
 =========================================================*/
 
-const slider = document.getElementById("videoSlider");
-const leftBtn = document.querySelector(".slide-btn.left");
-const rightBtn = document.querySelector(".slide-btn.right");
-const dotsContainer = document.getElementById("videoDots");
-const videoItems = document.querySelectorAll(".video-box");
+function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
+  const slider = document.getElementById(sliderId);
+  const leftBtn = slider.parentElement.querySelector(leftClass);
+  const rightBtn = slider.parentElement.querySelector(rightClass);
+  const dotsContainer = document.getElementById(dotsId);
+  const videoItems = slider.querySelectorAll(".video-box");
 
-let currentIndex = 0;
-const totalItems = videoItems.length;
-const maxDots = 5;
+  let currentIndex = 0;
+  const totalItems = videoItems.length;
+  const maxDots = 5;
 
-function scrollToVideo(index) {
-  const target = videoItems[index];
-  if (target) {
-    target.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "start",
-    });
-
-    currentIndex = index;
-    updateDots();
-    updateButtons();
-  }
-}
-
-function updateButtons() {
-  const isMobile = window.innerWidth < 780;
-  leftBtn.style.display = isMobile || currentIndex === 0 ? "none" : "flex";
-  rightBtn.style.display =
-    isMobile || currentIndex === totalItems - 1 ? "none" : "flex";
-}
-
-function updateDots() {
-  dotsContainer.innerHTML = "";
-
-  let start = 0,
-    end = totalItems;
-
-  if (totalItems > maxDots) {
-    if (currentIndex <= 2) {
-      start = 0;
-      end = maxDots;
-    } else if (currentIndex >= totalItems - 3) {
-      start = totalItems - maxDots;
-      end = totalItems;
-    } else {
-      start = currentIndex - 2;
-      end = currentIndex + 3;
+  function scrollToVideo(index) {
+    const target = videoItems[index];
+    if (target) {
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "start",
+      });
+      currentIndex = index;
+      updateDots();
+      updateButtons();
     }
   }
 
-  for (let i = start; i < end; i++) {
-    const dot = document.createElement("span");
-    dot.classList.add("dot");
-    if (i === currentIndex) dot.classList.add("active");
-    dot.addEventListener("click", () => scrollToVideo(i));
-    dotsContainer.appendChild(dot);
+  function updateButtons() {
+    const isMobile = window.innerWidth < 780;
+    leftBtn.style.display = isMobile || currentIndex === 0 ? "none" : "flex";
+    rightBtn.style.display =
+      isMobile || currentIndex >= totalItems - 2 ? "none" : "flex";
   }
-}
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const index = Array.from(videoItems).indexOf(entry.target);
-        if (index !== currentIndex) {
-          currentIndex = index;
-          updateDots();
-          updateButtons();
-        }
+  function updateDots() {
+    dotsContainer.innerHTML = "";
+    let start = 0,
+      end = totalItems;
+
+    if (totalItems > maxDots) {
+      if (currentIndex <= 2) {
+        start = 0;
+        end = maxDots;
+      } else if (currentIndex >= totalItems - 3) {
+        start = totalItems - maxDots;
+        end = totalItems;
+      } else {
+        start = currentIndex - 2;
+        end = currentIndex + 3;
       }
-    });
-  },
-  {
-    root: slider,
-    threshold: 0.6,
+    }
+
+    for (let i = start; i < end; i++) {
+      const dot = document.createElement("span");
+      dot.classList.add("dot");
+      if (i === currentIndex) dot.classList.add("active");
+      dot.addEventListener("click", () => scrollToVideo(i));
+      dotsContainer.appendChild(dot);
+    }
   }
-);
 
-// Observe each video item
-videoItems.forEach((item) => observer.observe(item));
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = Array.from(videoItems).indexOf(entry.target);
+          if (index !== currentIndex) {
+            currentIndex = index;
+            updateDots();
+            updateButtons();
+          }
+        }
+      });
+    },
+    {
+      root: slider,
+      threshold: 0.6,
+    }
+  );
 
-// Button navigation
-leftBtn.addEventListener("click", () => {
-  if (window.innerWidth >= 500 && currentIndex > 0) {
-    scrollToVideo(currentIndex - 1);
-  }
-});
+  videoItems.forEach((item) => observer.observe(item));
 
-rightBtn.addEventListener("click", () => {
-  if (window.innerWidth >= 500 && currentIndex < totalItems - 1) {
-    scrollToVideo(currentIndex + 1);
-  }
-});
-
-// Swipe support
-let startX = 0;
-slider.addEventListener("touchstart", (e) => {
-  if (window.innerWidth < 500) {
-    startX = e.touches[0].clientX;
-  }
-});
-
-slider.addEventListener("touchend", (e) => {
-  if (window.innerWidth < 500) {
-    const endX = e.changedTouches[0].clientX;
-    const deltaX = endX - startX;
-
-    if (deltaX > 50 && currentIndex > 0) {
+  leftBtn.addEventListener("click", () => {
+    if (currentIndex > 0) {
       scrollToVideo(currentIndex - 1);
-    } else if (deltaX < -50 && currentIndex < totalItems - 1) {
+    }
+  });
+
+  rightBtn.addEventListener("click", () => {
+    if (currentIndex < totalItems - 1) {
       scrollToVideo(currentIndex + 1);
     }
-  }
-});
+  });
 
-// ✅ Initialize slider position and button/dot state on page load
-// scrollToVideo(0);
-// ✅ Reset scroll position and initialize UI
-window.addEventListener("load", () => {
-  // Ensure we're scrolled to the beginning
+  let startX = 0;
+  slider.addEventListener("touchstart", (e) => {
+    if (window.innerWidth < 500) {
+      startX = e.touches[0].clientX;
+    }
+  });
+
+  slider.addEventListener("touchend", (e) => {
+    if (window.innerWidth < 500) {
+      const endX = e.changedTouches[0].clientX;
+      const deltaX = endX - startX;
+
+      if (deltaX > 50 && currentIndex > 0) {
+        scrollToVideo(currentIndex - 1);
+      } else if (deltaX < -50 && currentIndex < totalItems - 1) {
+        scrollToVideo(currentIndex + 1);
+      }
+    }
+  });
+
   slider.scrollLeft = 0;
-
-  // Set index manually
-  currentIndex = 0;
-
-  // Call UI updates
-  updateButtons();
-  updateDots();
-});
-
-
-
-/*=========================================================
-✅ PAGE RELOAD
-=========================================================*/
-
-// Initial
-window.addEventListener("DOMContentLoaded", () => {
   scrollToVideo(0);
   updateButtons();
   updateDots();
-  window.scrollTo({ top: 0, behavior: "auto" });
+
+  window.addEventListener("resize", updateButtons);
+}
+
+/*=====================================================
+MORE PROJECTS BUTTON FUNCTIONALITY
+=======================================================*/
+
+const moreBtn = document.getElementById("moreProjectsBtn");
+const bottomSliderWrapper = document.getElementById("bottomSliderWrapper");
+
+moreBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  bottomSliderWrapper.classList.remove("hidden");
+
+  // Optionally scroll to that section
+  bottomSliderWrapper.scrollIntoView({ behavior: "smooth" });
+
+  // Optional: Hide the button
+  moreBtn.style.display = "none";
 });
 
-window.addEventListener("resize", updateButtons);
+
+/*=========================================================
+✅ PAGE RELOAD & INITIALIZATION
+=========================================================*/
+
+
+window.onload = () => {
+  // Disable browser scroll restoration
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  // Clear hash in URL
+  if (window.location.hash) {
+    history.replaceState(null, null, window.location.pathname);
+  }
+
+  // Scroll to top immediately
+  window.scrollTo({ top: 0, behavior: "auto" });
+};
 
 /*=========================================================
 ✅ CONTACT FORM
@@ -253,8 +255,8 @@ const messageBox = document.getElementById("formMessage");
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  messageBox.style.color = "#007bff"; // Blue during loading
-  messageBox.innerHTML = `<span class="loader"></span> Sending...`;
+  messageBox.style.color = "#007bff";
+  messageBox.innerHTML = `<span class=\"loader\"></span> Sending...`;
 
   const formData = new FormData(form);
 
@@ -279,7 +281,6 @@ form.addEventListener("submit", async function (e) {
     messageBox.innerHTML = "❌ Failed to send message. Network error.";
   }
 
-  // Auto-hide after 4 seconds
   setTimeout(() => {
     messageBox.innerHTML = "";
   }, 4000);
