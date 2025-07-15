@@ -560,6 +560,7 @@ footer ul i {
   width: 100%;
   overflow: hidden;
   padding: 2rem 1rem;
+  transition: all 2s ease;
 }
 
 .video-section {

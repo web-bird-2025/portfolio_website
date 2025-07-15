@@ -207,22 +207,35 @@ function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
 }
 
 /*=====================================================
-✅ MORE PROJECTS BUTTON FUNCTIONALITY
+✅ MORE PROJECTS BUTTON and SHOW LESS BUTTON FUNCTIONALITY
 =======================================================*/
 
 const moreBtn = document.getElementById("moreProjectsBtn");
 const bottomSliderWrapper = document.getElementById("bottomSliderWrapper");
+const projectsSection = document.getElementById("projectsSection");
+
+let isExpanded = false;
 
 moreBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  bottomSliderWrapper.classList.remove("hidden");
 
-  // Optionally scroll to that section
-  bottomSliderWrapper.scrollIntoView({ behavior: "smooth" });
+  if (!isExpanded) {
+    bottomSliderWrapper.classList.remove("hidden");
+    bottomSliderWrapper.scrollIntoView({ behavior: "smooth" });
+    moreBtn.textContent = "Show Less";
+  } else {
+    bottomSliderWrapper.classList.add("hidden");
 
-  // Optional: Hide the button
-  moreBtn.style.display = "none";
+    // Scroll to top of main projects section
+    projectsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    moreBtn.textContent = "More Projects";
+  }
+
+  isExpanded = !isExpanded;
 });
+
+
 
 /*=========================================================
 ✅ PAGE RELOAD & INITIALIZATION
