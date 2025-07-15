@@ -224,16 +224,14 @@ moreBtn.addEventListener("click", (e) => {
   moreBtn.style.display = "none";
 });
 
-
 /*=========================================================
 ✅ PAGE RELOAD & INITIALIZATION
 =========================================================*/
 
-
 window.onload = () => {
   // Disable browser scroll restoration
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
   }
 
   // Clear hash in URL
