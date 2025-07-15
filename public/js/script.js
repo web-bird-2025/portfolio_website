@@ -207,7 +207,7 @@ function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
 }
 
 /*=====================================================
-MORE PROJECTS BUTTON FUNCTIONALITY
+✅ MORE PROJECTS BUTTON FUNCTIONALITY
 =======================================================*/
 
 const moreBtn = document.getElementById("moreProjectsBtn");
