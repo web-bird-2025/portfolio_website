@@ -681,7 +681,8 @@ footer ul i {
   width: 100%;
 }
 
-#bottomSliderWrapper.show {
+#bottomSliderWrapper.show,
+#imageSliderWrapper.show {
   max-height: 2000px; 
   opacity: 1;
   visibility: visible;

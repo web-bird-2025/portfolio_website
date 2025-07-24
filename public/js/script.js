@@ -254,6 +254,7 @@ const bottomSliderHeading = bottomSliderWrapper.querySelector(".category");
 
 let isExpanded = false;
 let bottomSliderInitialized = false;
+let imageSliderInitialized = false;
 
 moreBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -281,6 +282,8 @@ moreBtn.addEventListener("click", (e) => {
 } else {
   bottomSliderWrapper.classList.remove("show");
   bottomSliderWrapper.classList.add("hidden");
+  imageSliderWrapper.classList.remove("show");
+  imageSliderWrapper.classList.add("hidden");
   moreBtn.textContent = "More Projects";
   scrollToElement(projectsSection.querySelector(".category"), 107);
 }
