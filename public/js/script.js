@@ -71,7 +71,7 @@ window.addEventListener("scroll", () => {
 ====================================================== */
 
 ScrollReveal({
-  reset: true,
+  reset: false,
   distance: "60px",
   duration: 2000,
   delay: 200,
@@ -248,6 +248,7 @@ function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
 =========================*/
 const moreBtn = document.getElementById("moreProjectsBtn");
 const bottomSliderWrapper = document.getElementById("bottomSliderWrapper");
+const imageSliderWrapper = document.getElementById("imageSliderWrapper");
 const projectsSection = document.getElementById("projectsSection");
 const bottomSliderHeading = bottomSliderWrapper.querySelector(".category");
 
@@ -258,27 +259,32 @@ moreBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
   if (!isExpanded) {
-    bottomSliderWrapper.classList.add("show");
-    bottomSliderWrapper.classList.remove("hidden");
-    moreBtn.textContent = "Show Less";
+  bottomSliderWrapper.classList.remove("hidden");
+  bottomSliderWrapper.offsetHeight; // force reflow
+  bottomSliderWrapper.classList.add("show");
+  imageSliderWrapper.classList.remove("hidden");
+  imageSliderWrapper.offsetHeight; // force reflow
+  imageSliderWrapper.classList.add("show");
+  moreBtn.textContent = "Show Less";
 
-    if (!bottomSliderInitialized) {
-      initializeVideoSlider({
-        sliderId: "videoSliderBottom",
-        dotsId: "videoDotsBottom",
-        leftClass: ".slide-btn.left",
-        rightClass: ".slide-btn.right",
-      });
-      bottomSliderInitialized = true;
-    }
-
-    scrollToElement(bottomSliderHeading, 107);
-  } else {
-    bottomSliderWrapper.classList.remove("show");
-    bottomSliderWrapper.classList.add("hidden");
-    moreBtn.textContent = "More Projects";
-    scrollToElement(projectsSection.querySelector(".category"), 107);
+  if (!bottomSliderInitialized) {
+    initializeVideoSlider({
+      sliderId: "videoSliderBottom",
+      dotsId: "videoDotsBottom",
+      leftClass: ".slide-btn.left",
+      rightClass: ".slide-btn.right",
+    });
+    bottomSliderInitialized = true;
   }
+
+  scrollToElement(bottomSliderHeading, 107);
+} else {
+  bottomSliderWrapper.classList.remove("show");
+  bottomSliderWrapper.classList.add("hidden");
+  moreBtn.textContent = "More Projects";
+  scrollToElement(projectsSection.querySelector(".category"), 107);
+}
+
 
   isExpanded = !isExpanded;
 });

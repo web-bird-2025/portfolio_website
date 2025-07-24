@@ -673,11 +673,12 @@ footer ul i {
   background-color: #9f5afd;
 }
 
-#bottomSliderWrapper {
+#bottomSliderWrapper, #imageSliderWrapper {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
   transition: all 0.5s ease;
+  width: 100%;
 }
 
 #bottomSliderWrapper.show {
