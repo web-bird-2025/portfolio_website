@@ -255,10 +255,6 @@ ScrollReveal().reveal(".right-scroll", { origin: `right` });
     initializeVideoSlider({ sliderId: "imageSlider3", dotsId: "imageDots3", leftClass: ".left", rightClass: ".right" });
   });
 
-
-
-
-
 /*=======================
 ✅ MORE PROJECTS TOGGLE
 =========================*/
