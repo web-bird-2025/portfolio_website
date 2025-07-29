@@ -85,162 +85,178 @@ ScrollReveal().reveal(".right-scroll", { origin: `right` });
 /*=========================================================
 ✅ SLIDING EFFECT FOR MULTIPLE VIDEO SLIDERS
 =========================================================*/
+  function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
+    const slider = document.getElementById(sliderId);
+    const leftBtn = slider.parentElement.querySelector(leftClass);
+    const rightBtn = slider.parentElement.querySelector(rightClass);
+    const dotsContainer = document.getElementById(dotsId);
+    const videoItems = slider.querySelectorAll(".video-box");
 
-function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
-  const slider = document.getElementById(sliderId);
-  const leftBtn = slider.parentElement.querySelector(leftClass);
-  const rightBtn = slider.parentElement.querySelector(rightClass);
-  const dotsContainer = document.getElementById(dotsId);
-  const videoItems = slider.querySelectorAll(".video-box");
+    let currentIndex = 0;
+    const totalItems = videoItems.length;
+    const maxDots = 5;
 
-  let currentIndex = 0;
-  const totalItems = videoItems.length;
-  const maxDots = 5;
+    function applyLayoutFixes() {
+      const isMobile = window.innerWidth < 780;
 
-  function applyLayoutFixes() {
-    const isMobile = window.innerWidth < 780;
-
-    if (isMobile) {
-      slider.style.overflowX = totalItems > 2 ? "auto" : "hidden";
-      slider.style.scrollSnapType = totalItems > 2 ? "x mandatory" : "none";
-      videoItems.forEach((item) => {
-        item.style.minWidth = "100%";
-        item.style.scrollSnapAlign = "start";
-      });
-    } else {
-      slider.style.overflowX = totalItems > 2 ? "auto" : "hidden";
-      videoItems.forEach((item) => {
-        item.style.minWidth = "";
-        item.style.scrollSnapAlign = "";
-      });
-    }
-  }
-
-  function scrollToVideo(index) {
-    const target = videoItems[index];
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        inline: "start",
-        block: "nearest",
-      });
-      currentIndex = index;
-      updateDots();
-      updateButtons();
-    }
-  }
-
-  function updateButtons() {
-    const isMobile = window.innerWidth < 780;
-    const isScrollable = slider.scrollWidth > slider.clientWidth;
-
-    if (isMobile || totalItems <= 2 || !isScrollable) {
-      leftBtn.style.display = "none";
-      rightBtn.style.display = "none";
-      return;
-    }
-
-    const scrollLeft = Math.round(slider.scrollLeft);
-    const maxScrollLeft = Math.round(slider.scrollWidth - slider.clientWidth);
-
-    leftBtn.style.display = scrollLeft <= 5 ? "none" : "flex";
-    rightBtn.style.display = scrollLeft >= maxScrollLeft - 5 ? "none" : "flex";
-  }
-
-  function updateDots() {
-    dotsContainer.innerHTML = "";
-    const isMobile = window.innerWidth < 780;
-
-    let start = 0;
-    let end = totalItems;
-
-    if (!isMobile && totalItems > maxDots) {
-      if (currentIndex <= 2) {
-        start = 0;
-        end = maxDots;
-      } else if (currentIndex >= totalItems - 3) {
-        start = totalItems - maxDots;
-        end = totalItems;
+      if (isMobile) {
+        slider.style.overflowX = totalItems > 2 ? "auto" : "hidden";
+        slider.style.scrollSnapType = totalItems > 2 ? "x mandatory" : "none";
+        videoItems.forEach((item) => {
+          item.style.minWidth = "100%";
+          item.style.scrollSnapAlign = "start";
+        });
       } else {
-        start = currentIndex - 2;
-        end = currentIndex + 3;
+        slider.style.overflowX = totalItems > 2 ? "auto" : "hidden";
+        videoItems.forEach((item) => {
+          item.style.minWidth = "";
+          item.style.scrollSnapAlign = "";
+        });
       }
     }
 
-    for (let i = start; i < end; i++) {
-      const dot = document.createElement("span");
-      dot.classList.add("dot");
-      if (i === currentIndex) dot.classList.add("active");
-      dot.addEventListener("click", () => scrollToVideo(i));
-      dotsContainer.appendChild(dot);
+    function scrollToVideo(index) {
+      const target = videoItems[index];
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+          inline: "start",
+          block: "nearest",
+        });
+        currentIndex = index;
+        updateDots();
+        updateButtons();
+      }
     }
-  }
 
-  // Detect scroll to update index, buttons, and dots
-  slider.addEventListener("scroll", () => {
-  const sliderRect = slider.getBoundingClientRect();
-  let closestIndex = 0;
-  let minDistance = Infinity;
+    function updateButtons() {
+      const isMobile = window.innerWidth <= 780;
+      const isScrollable = slider.scrollWidth > slider.clientWidth;
 
-  videoItems.forEach((item, index) => {
-    const rect = item.getBoundingClientRect();
-    const distance = Math.abs(rect.left - sliderRect.left);
-    if (distance < minDistance) {
-      minDistance = distance;
-      closestIndex = index;
+      if (isMobile || totalItems <= 2 || !isScrollable) {
+        leftBtn.style.display = "none";
+        rightBtn.style.display = "none";
+        return;
+      }
+
+      const scrollLeft = Math.round(slider.scrollLeft);
+      const maxScrollLeft = Math.round(slider.scrollWidth - slider.clientWidth);
+
+      leftBtn.style.display = scrollLeft <= 5 ? "none" : "flex";
+      rightBtn.style.display = scrollLeft >= maxScrollLeft - 5 ? "none" : "flex";
+      
     }
-  });
 
-  // ✅ Detect if scrolled fully to the right
-  const scrollLeft = Math.round(slider.scrollLeft);
-  const maxScrollLeft = Math.round(slider.scrollWidth - slider.clientWidth);
+    function updateDots() {
+      dotsContainer.innerHTML = "";
+      const isMobile = window.innerWidth <= 780;
 
-  if (scrollLeft >= maxScrollLeft - 5) {
-    closestIndex = videoItems.length - 1;
-  }
+      if (isMobile) return; // hide dots on mobile
 
-  if (closestIndex !== currentIndex) {
-    currentIndex = closestIndex;
-    updateDots();
-  }
+      let start = 0;
+      let end = totalItems;
 
-  updateButtons(); // Always update arrows
-});
+      if (totalItems > maxDots) {
+        if (currentIndex <= 2) {
+          start = 0;
+          end = maxDots;
+        } else if (currentIndex >= totalItems - 3) {
+          start = totalItems - maxDots;
+          end = totalItems;
+        } else {
+          start = currentIndex - 2;
+          end = currentIndex + 3;
+        }
+      }
 
-
-  leftBtn.addEventListener("click", () => {
-    if (currentIndex > 0) scrollToVideo(currentIndex - 1);
-  });
-
-  rightBtn.addEventListener("click", () => {
-    if (currentIndex < totalItems - 1) scrollToVideo(currentIndex + 1);
-  });
-
-  // Touch swipe for mobile
-  let startX = 0;
-  slider.addEventListener("touchstart", (e) => {
-    if (window.innerWidth < 780) startX = e.touches[0].clientX;
-  });
-
-  slider.addEventListener("touchend", (e) => {
-    if (window.innerWidth < 780) {
-      const deltaX = e.changedTouches[0].clientX - startX;
-      if (deltaX > 50 && currentIndex > 0) scrollToVideo(currentIndex - 1);
-      else if (deltaX < -50 && currentIndex < totalItems - 1)
-        scrollToVideo(currentIndex + 1);
+      for (let i = start; i < end; i++) {
+        const dot = document.createElement("span");
+        dot.classList.add("dot");
+        if (i === currentIndex) dot.classList.add("active");
+        dot.addEventListener("click", () => scrollToVideo(i));
+        dotsContainer.appendChild(dot);
+      }
     }
-  });
 
-  // Initial render
-  applyLayoutFixes();
-  scrollToVideo(0);
+    slider.addEventListener("scroll", () => {
+      const sliderRect = slider.getBoundingClientRect();
+      let closestIndex = 0;
+      let minDistance = Infinity;
 
-  window.addEventListener("resize", () => {
+      videoItems.forEach((item, index) => {
+        const rect = item.getBoundingClientRect();
+        const distance = Math.abs(rect.left - sliderRect.left);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      const scrollLeft = Math.round(slider.scrollLeft);
+      const maxScrollLeft = Math.round(slider.scrollWidth - slider.clientWidth);
+      if (scrollLeft >= maxScrollLeft - 5) {
+        closestIndex = videoItems.length - 1;
+      }
+
+      if (closestIndex !== currentIndex) {
+        currentIndex = closestIndex;
+        updateDots();
+      }
+
+      updateButtons();
+    });
+
+    leftBtn.addEventListener("click", () => {
+      if (currentIndex > 0) scrollToVideo(currentIndex - 1);
+    });
+
+    rightBtn.addEventListener("click", () => {
+      if (currentIndex < totalItems - 1) scrollToVideo(currentIndex + 1);
+    });
+
+    let startX = 0;
+    slider.addEventListener("touchstart", (e) => {
+      if (window.innerWidth <= 780) startX = e.touches[0].clientX;
+    });
+
+    slider.addEventListener("touchend", (e) => {
+      if (window.innerWidth <= 780) {
+        const deltaX = e.changedTouches[0].clientX - startX;
+        if (deltaX > 50 && currentIndex > 0) scrollToVideo(currentIndex - 1);
+        else if (deltaX < -50 && currentIndex < totalItems - 1)
+          scrollToVideo(currentIndex + 1);
+      }
+    });
+
+    // Call once DOM is ready
     applyLayoutFixes();
-    updateButtons();
-    updateDots();
+    scrollToVideo(0);
+
+    
+    
+
+    // Defer button visibility to next repaint so scrollWidth is correct
+    setTimeout(() => {
+      updateButtons();
+      updateDots();
+    }, 50);
+
+    window.addEventListener("resize", () => {
+      applyLayoutFixes();
+      updateButtons();
+      updateDots();
+    });
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    initializeVideoSlider({ sliderId: "imageSlider0", dotsId: "imageDots0", leftClass: ".left", rightClass: ".right" });
+    initializeVideoSlider({ sliderId: "imageSlider1", dotsId: "imageDots1", leftClass: ".left", rightClass: ".right" });
+    initializeVideoSlider({ sliderId: "imageSlider2", dotsId: "imageDots2", leftClass: ".left", rightClass: ".right" });
+    initializeVideoSlider({ sliderId: "imageSlider3", dotsId: "imageDots3", leftClass: ".left", rightClass: ".right" });
   });
-}
+
+
+
 
 
 /*=======================
@@ -249,6 +265,9 @@ function initializeVideoSlider({ sliderId, dotsId, leftClass, rightClass }) {
 const moreBtn = document.getElementById("moreProjectsBtn");
 const bottomSliderWrapper = document.getElementById("bottomSliderWrapper");
 const imageSliderWrapper = document.getElementById("imageSliderWrapper");
+const imageSliderWrapper1 = document.getElementById("imageSliderWrapper1");
+const imageSliderWrapper2 = document.getElementById("imageSliderWrapper2");
+const imageSliderWrapper3 = document.getElementById("imageSliderWrapper3");
 const projectsSection = document.getElementById("projectsSection");
 const bottomSliderHeading = bottomSliderWrapper.querySelector(".category");
 
@@ -266,7 +285,16 @@ moreBtn.addEventListener("click", (e) => {
   imageSliderWrapper.classList.remove("hidden");
   imageSliderWrapper.offsetHeight; // force reflow
   imageSliderWrapper.classList.add("show");
-  moreBtn.textContent = "Show Less";
+  imageSliderWrapper1.classList.remove("hidden");
+  imageSliderWrapper1.offsetHeight; // force reflow
+  imageSliderWrapper1.classList.add("show");
+  imageSliderWrapper2.classList.remove("hidden");
+  imageSliderWrapper2.offsetHeight; // force reflow
+  imageSliderWrapper2.classList.add("show");
+  imageSliderWrapper3.classList.remove("hidden");
+  imageSliderWrapper3.offsetHeight; // force reflow
+  imageSliderWrapper3.classList.add("show")
+  moreBtn.textContent = "Show Less"
 
   if (!bottomSliderInitialized) {
     initializeVideoSlider({
@@ -284,6 +312,12 @@ moreBtn.addEventListener("click", (e) => {
   bottomSliderWrapper.classList.add("hidden");
   imageSliderWrapper.classList.remove("show");
   imageSliderWrapper.classList.add("hidden");
+  imageSliderWrapper1.classList.remove("show");
+  imageSliderWrapper1.classList.add("hidden");
+  imageSliderWrapper2.classList.remove("show");
+  imageSliderWrapper2.classList.add("hidden");
+  imageSliderWrapper3.classList.remove("show");
+  imageSliderWrapper3.classList.add("hidden");
   moreBtn.textContent = "More Projects";
   scrollToElement(projectsSection.querySelector(".category"), 107);
 }
