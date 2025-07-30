@@ -525,6 +525,7 @@ footer ul i {
   scroll-behavior: smooth;
   scrollbar-color: #9f5afd transparent; /* thumb and track */
   scrollbar-width: thin;
+  align-items: center;
 }
 
 /* For Webkit browsers (Chrome, Edge, Safari) */
@@ -552,8 +553,11 @@ footer ul i {
   border-radius: 10px;
   position: relative;
   padding-bottom: 56.25%;
-  height: 0;
+  height: auto;
+  overflow: hidden;
+  width: auto;
   background: #000;
+  
 }
 
 .slider-container {
@@ -564,15 +568,14 @@ footer ul i {
   transition: all 2s ease;
 }
 
-
-
 .video-box {
   flex: 0 0 auto;
-  max-width: 100%;
+  max-width: auto;
+  
 }
 
 .youtube-frame {
-  width: 100%;
+  width: auto;
   aspect-ratio: 16 / 9;
   border: none;
   border-radius: 10px;
@@ -580,6 +583,8 @@ footer ul i {
   top: 0;
   left: 0;
   height: 100%;
+  object-fit: contain;
+  
 }
 
 .yt-link {
@@ -672,6 +677,8 @@ footer ul i {
 .video-dots .dot.active {
   background-color: #9f5afd;
 }
+
+
 
 #bottomSliderWrapper, #imageSliderWrapper {
   max-height: 0;
