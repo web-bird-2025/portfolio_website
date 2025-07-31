@@ -549,14 +549,14 @@ footer ul i {
 
 .video-container {
   text-align: center;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 13px 5px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   position: relative;
   padding-bottom: 56.25%;
   height: auto;
   overflow: hidden;
   width: auto;
-  background: #000;
+  background: #fff;
   
 }
 
@@ -677,7 +677,6 @@ footer ul i {
 .video-dots .dot.active {
   background-color: #9f5afd;
 }
-
 
 
 #bottomSliderWrapper, #imageSliderWrapper {
